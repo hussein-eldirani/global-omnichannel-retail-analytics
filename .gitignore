@@ -1,0 +1,37 @@
+# Python Environments & Cache
+.venv/
+env/
+venv/
+ENV/
+__pycache__/
+
+# Python Artifacts
+*.pyc
+*.py[cod]
+*$py.class
+
+# OS / Editor Artifacts
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+.history/
+
+# Environment Variables & Secrets
+.env
+.env.local
+
+# Power BI Local Temporary & Backup Files
+*.pbix.auto
+*.pbit.bak
+*.abf
+
+# Large Raw Datasets
+*.csv
+*.xlsx
+data/raw/*
+!data/raw/.gitkeep
+
+# EXCEPT for .gitkeep files to maintain repo directory structure
+!data/**/.gitkeep
