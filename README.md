@@ -88,9 +88,11 @@ Measures are isolated inside a dedicated `_Key Measures` table for optimal repos
 
 ## Repository Structure
 
+```text
 ├── Global_Omnichannel_Analytics.pbix  # Main Power BI Desktop File
 ├── README.md                           # Technical Documentation
 ├── requirements.txt                    # Environment dependencies
+├── .gitignore
 ├── scripts/
 │   └── generate_data.py               # Python mock data engine
 └── data/
@@ -99,6 +101,7 @@ Measures are isolated inside a dedicated `_Key Measures` table for optimal repos
         ├── raw_fx_rates.csv
         ├── raw_products.csv
         └── raw_sales_transactions.csv
+```
 
 ## Next Steps for Future Iterations
 1. **Report View & UI/UX Design:** Build executive dashboard pages (Sales Overview, Logistics & Carrier Performance, Regional & Currency Analysis).
