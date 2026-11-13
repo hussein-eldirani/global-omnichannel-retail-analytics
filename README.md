@@ -7,6 +7,25 @@ The project transforms raw, unstructured multi-source data into an optimized, st
 
 ---
 
+## Repository Structure
+
+```text
+├── Global_Omnichannel_Analytics.pbix  # Main Power BI Desktop File
+├── README.md                           # Technical Documentation
+├── requirements.txt                    # Environment dependencies
+├── .gitignore
+├── scripts/
+│   └── generate_data.py               # Python mock data engine
+└── data/
+    └── raw/                            # Generated source CSVs
+        ├── raw_customers.csv
+        ├── raw_fx_rates.csv
+        ├── raw_products.csv
+        └── raw_sales_transactions.csv
+```
+
+---
+
 ## Technical Architecture & Workflow
 
 ### 1. Data Generation & Ingestion
@@ -52,10 +71,10 @@ All initial transformations were executed within Power Query to maximize storage
 The analytical data model follows a strict Star Schema architecture centered around `FactSales`:
 
 - **FactSales (Center):** Core transactional table containing granular line items, quantities, discounts, and revenue in USD.
-- **DimCustomer ($1 \rightarrow *$ FactSales):** Customer demographics and location context.
-- **DimDate ($1 \rightarrow *$ FactSales):** Continuous calendar table powering temporal aggregation.
-- **DimCarrier ($1 \rightarrow *$ DimProduct):** Decoupled dimension handling carrier attributes.
-- **DimProduct ($1 \rightarrow *$ FactSales):** Product catalog, attributes, and category hierarchies.
+- **DimCustomer ($1 $\rightarrow *$ FactSales):** Customer demographics and location context.
+- **DimDate ($1 $\rightarrow *$ FactSales):** Continuous calendar table powering temporal aggregation.
+- **DimCarrier ($1 $\rightarrow *$ DimProduct):** Decoupled dimension handling carrier attributes.
+- **DimProduct ($1 $\rightarrow *$ FactSales):** Product catalog, attributes, and category hierarchies.
 - **DimFX (Disconnected Reference):** Rates stamped directly into `FactSales` during ETL; no active model relationship required.
 
 All relationships enforce single-direction cross-filtering (`1` on Dimension side to `*` on Fact side) to eliminate ambivalence and circular filter propagation.
@@ -86,23 +105,18 @@ Measures are isolated inside a dedicated `_Key Measures` table for optimal repos
 
 ---
 
-## Repository Structure
+### 5. Executive Dashboards
 
-```text
-├── Global_Omnichannel_Analytics.pbix  # Main Power BI Desktop File
-├── README.md                           # Technical Documentation
-├── requirements.txt                    # Environment dependencies
-├── .gitignore
-├── scripts/
-│   └── generate_data.py               # Python mock data engine
-└── data/
-    └── raw/                            # Generated source CSVs
-        ├── raw_customers.csv
-        ├── raw_fx_rates.csv
-        ├── raw_products.csv
-        └── raw_sales_transactions.csv
-```
+#### Sales Overview
+- **KPI Summary Cards:**
+  Including relevant sales metrics like `Total Orders`, `Total Revenue USD`, and `YoY Revenue Growth %`. 
+- **Clustered Column Chart:**
+  Visualizes `Total Revenue USD` for each Product `Category`.
+- **Line Chart:**
+  Displays the monthly time-series trajectory of `Total Revenue USD` by `Month`. Each data point also shows the `Quarter` each month belongs to when hovered on.
+
+---
 
 ## Next Steps for Future Iterations
-1. **Report View & UI/UX Design:** Build executive dashboard pages (Sales Overview, Logistics & Carrier Performance, Regional & Currency Analysis).
+1. **Report View & UI/UX Design:** Build executive dashboard pages (Logistics & Carrier Performance, Regional & Currency Analysis).
 2. **Advanced Analytics:** Implement customer cohort retention analysis and Dynamic Pareto (80/20 Rule) product categorization via DAX.
